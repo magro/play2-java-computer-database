@@ -1,5 +1,7 @@
 package controllers;
 
+import static play.data.Form.form;
+import models.Computer;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -27,7 +29,7 @@ public class Application extends Controller {
     }
 
     public static Result create() {
-        return TODO;
+        return ok(views.html.createForm.render(form(Computer.class)));
     }
 
     public static Result save() {
