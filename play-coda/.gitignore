@@ -1,3 +1,4 @@
+conf/evolutions/default/1.sql
 logs
 project/project
 project/target
@@ -15,7 +16,4 @@ dist
 /.settings
 /.target
 /.cache
-/.target
-/.target
-/.target
 /.target
