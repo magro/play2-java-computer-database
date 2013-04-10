@@ -7,6 +7,12 @@
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) }
 
 @main("Add Computer") {
+
+    @if(flash.containsKey("success")) {
+        <div class="alert-message success">
+            <strong>Done!</strong> @flash.get("success")
+        </div>
+    }
     
     <h1>Add a computer</h1>
     

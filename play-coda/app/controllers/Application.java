@@ -2,14 +2,14 @@ package controllers;
 
 import static play.data.Form.form;
 import models.Computer;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        return ok(views.html.index.render("Your new application is ready."));
     }
 
     /**
@@ -32,8 +32,17 @@ public class Application extends Controller {
         return ok(views.html.createForm.render(form(Computer.class)));
     }
 
+    /**
+     * Handle the 'new computer form' submission
+     */
     public static Result save() {
-        return TODO;
+        Form<Computer> computerForm = form(Computer.class).bindFromRequest();
+        if (computerForm.hasErrors()) {
+            return badRequest(views.html.createForm.render(computerForm));
+        }
+        computerForm.get().save();
+        flash("success", "Computer " + computerForm.get().name + " has been created");
+        return redirect(controllers.routes.Application.create());
     }
 
     public static Result edit(Long id) {
