@@ -16,7 +16,7 @@ public class Application extends Controller {
      * Display the list of computers.
      */
     public static Result list() {
-        return TODO;
+        return ok(views.html.list.render(Computer.find.all()));
     }
 
     public static Result create() {
