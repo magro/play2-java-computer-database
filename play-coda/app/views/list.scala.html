@@ -12,12 +12,6 @@
 @main("List Computers") {
     
     <h1 id="homeTitle">@Messages("computers.list.title", computers.size)</h1>
-
-    @if(flash.containsKey("success")) {
-        <div class="alert-message success">
-            <strong>Done!</strong> @flash.get("success")
-        </div>
-    }
     
     @if(computers.isEmpty) {
         
