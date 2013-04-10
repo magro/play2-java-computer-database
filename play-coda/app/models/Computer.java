@@ -2,15 +2,34 @@ package models;
 
 import java.util.Date;
 
-/**
- * Computer entity
- */
-public class Computer {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import play.data.format.Formats;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
+
+/**
+ * Computer entity managed by ebean.
+ */
+@Entity
+@SuppressWarnings("serial")
+public class Computer extends Model {
+
+    @Id
     public Long id;
+
+    @Constraints.Required
     public String name;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date introduced;
+
+    @Formats.DateTime(pattern = "yyyy-MM-dd")
     public Date discontinued;
+
+    @ManyToOne
     public Company company;
 
     public Computer() {
@@ -21,5 +40,7 @@ public class Computer {
         this.introduced = introduced;
         this.company = company;
     }
+
+    public static Finder<Long, Computer> find = new Finder<Long, Computer>(Long.class, Computer.class);
 
 }
