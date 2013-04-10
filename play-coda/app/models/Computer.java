@@ -10,6 +10,8 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
+import com.avaje.ebean.Page;
+
 /**
  * Computer entity managed by ebean.
  */
@@ -42,5 +44,9 @@ public class Computer extends Model {
     }
 
     public static Finder<Long, Computer> find = new Finder<Long, Computer>(Long.class, Computer.class);
+
+    public static Page<Computer> page(int page, int pageSize, String sortBy, String order) {
+        return find.orderBy(sortBy + " " + order).findPagingList(pageSize).getPage(page);
+    }
 
 }

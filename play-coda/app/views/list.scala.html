@@ -1,4 +1,4 @@
-@(computers: List[Computer])
+@(currentPage: com.avaje.ebean.Page[Computer])
 
 @**********************************
 * Helper generating table headers *
@@ -10,10 +10,11 @@
 }
 
 @main("List Computers") {
-    
-    <h1 id="homeTitle">@computers.size computers found</h1>
-    
-    @if(computers.isEmpty) {
+
+
+    <h1 id="homeTitle">@currentPage.getTotalRowCount computers found</h1>
+
+    @if(currentPage.getTotalRowCount == 0) {
         
         <div class="well">
             <em>Nothing to display</em>
@@ -32,7 +33,7 @@
             </thead>
             <tbody>
 
-                @for(computer <- computers) {
+                @for(computer <- currentPage.getList()) {
                     <tr>
                         <td><a href="@routes.Application.edit(computer.id)">@computer.name</a></td>
                         <td>
@@ -61,6 +62,32 @@
 
             </tbody>
         </table>
+
+        <div id="pagination" class="pagination">
+            <ul>
+                @if(currentPage.hasPrev) {
+                    <li class="prev">
+                        <a href="@routes.Application.list(currentPage.getPageIndex - 1)">&larr; Previous</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Previous</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@routes.Application.list(currentPage.getPageIndex + 1)">Next &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Next &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>
         
     }
         

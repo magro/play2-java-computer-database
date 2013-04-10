@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 
 # Computers list
-GET     /computers                  controllers.Application.list()
+GET     /computers                  controllers.Application.list(page: Int ?= 0)
 
 # Add computer
 GET     /computers/new              controllers.Application.create()

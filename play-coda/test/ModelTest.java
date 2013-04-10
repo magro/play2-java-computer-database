@@ -14,6 +14,8 @@ import org.junit.Test;
 
 import play.test.FakeApplication;
 
+import com.avaje.ebean.Page;
+
 public class ModelTest {
 
     private FakeApplication app;
@@ -36,6 +38,14 @@ public class ModelTest {
         assertThat(computer.id).isNotNull();
         Computer c64 = Computer.find.byId(computer.id);
         assertThat(c64.name).isEqualTo(computer.name);
+    }
+
+    @Test
+    public void pagination() {
+        Page<Computer> computers = Computer.page(0, 20, "id", "asc");
+        assertThat(computers.getTotalRowCount()).isEqualTo(574);
+        assertThat(computers.getList().size()).isEqualTo(20);
+        assertThat(computers.getList().get(0).company).isNotNull();
     }
 
 }
