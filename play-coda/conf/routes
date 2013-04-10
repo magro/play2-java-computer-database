@@ -5,8 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-# Computers list (look at the default values for pagination parameters)
-GET     /computers                  controllers.Application.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+# Computers list
+GET     /computers                  controllers.Application.list()
 
 # Add computer
 GET     /computers/new              controllers.Application.create()
