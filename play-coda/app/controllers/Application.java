@@ -35,7 +35,7 @@ public class Application extends Controller {
         }
         computerForm.get().save();
         flash("success", "Computer " + computerForm.get().name + " has been created");
-        return redirect(controllers.routes.Application.create());
+        return redirect(routes.Application.list(0, "name", "asc", ""));
     }
 
     public static Result edit(Long id) {

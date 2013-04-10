@@ -39,6 +39,12 @@
 
 
     <h1 id="homeTitle">@currentPage.getTotalRowCount computers found</h1>
+
+    @if(flash.containsKey("success")) {
+        <div class="alert-message success">
+            <strong>Done!</strong> @flash.get("success")
+        </div>
+    }
     
     <div id="actions">
         
@@ -46,6 +52,8 @@
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by computer name...">
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         </form>
+        
+        <a class="btn success" id="add" href="@routes.Application.create()">Add a new computer</a>
         
     </div>
 

@@ -14,6 +14,7 @@ import models.Computer;
 
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -31,12 +32,26 @@ public class CreateComputerIntegrationTest extends FluentTest {
     public static final int PORT = 3333;
     public static FakeApplication app;
     private static TestServer server;
+    private String name;
+    private CreateComputerPage page;
 
     @BeforeClass
-    public static void setup() {
+    public static void startApp() {
         app = fakeApplication(inMemoryDatabase());
         server = new TestServer(PORT, app);
         server.start();
+    }
+
+    @Before
+    public void setup() {
+        // Guard assertion
+        name = "the first one";
+        assertThat(Computer.find.where().eq("name", name).findRowCount()).isEqualTo(0);
+
+        // Common arrangement
+        page = createPage(CreateComputerPage.class);
+        page.go();
+        page.isAt();
     }
 
     @AfterClass
@@ -51,24 +66,17 @@ public class CreateComputerIntegrationTest extends FluentTest {
 
     @Test
     public void createComputer() throws Exception {
-        // Check precondition / assumption
-        final String name = "the first one";
-        assertThat(Computer.find.where().eq("name", name).findRowCount()).isEqualTo(0);
-
-        // Load page
-        final CreateComputerPage page = createPage(CreateComputerPage.class);
-        page.go();
-        page.isAt();
-
-        // Fill form
+        // Arrange
         page.fillName(name);
         page.fillIntroduced(new Date());
         final Company company = Company.find.setMaxRows(1).findUnique();
         page.selectCompany(company.id);
+
+        // Act
         page.submit();
 
         // Assert
-        final CreateComputerPage resultPage = createPage(CreateComputerPage.class);
+        final ListComputersPage resultPage = createPage(ListComputersPage.class);
         resultPage.isAt();
         resultPage.displaysMessage(name);
 
