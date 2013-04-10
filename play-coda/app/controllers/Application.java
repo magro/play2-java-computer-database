@@ -15,8 +15,10 @@ public class Application extends Controller {
     /**
      * Display the list of computers.
      */
-    public static Result list(int page) {
-        return ok(views.html.list.render(Computer.page(page, 10, "id", "asc")));
+    public static Result list(int page, String sortBy, String order, String filter) {
+        return ok(views.html.list.render(
+                Computer.page(page, 10, sortBy, order, filter),
+                sortBy, order, filter));
     }
 
     public static Result create() {

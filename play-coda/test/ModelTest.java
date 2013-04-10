@@ -42,7 +42,7 @@ public class ModelTest {
 
     @Test
     public void pagination() {
-        Page<Computer> computers = Computer.page(0, 20, "id", "asc");
+        Page<Computer> computers = Computer.page(0, 20, "id", "asc", "");
         assertThat(computers.getTotalRowCount()).isEqualTo(574);
         assertThat(computers.getList().size()).isEqualTo(20);
         assertThat(computers.getList().get(0).company).isNotNull();

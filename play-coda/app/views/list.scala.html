@@ -1,11 +1,37 @@
-@(currentPage: com.avaje.ebean.Page[Computer])
+@(currentPage: com.avaje.ebean.Page[Computer], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Application.list(newPage, sortBy, order, currentFilter)
+    
+}
 
 @**********************************
 * Helper generating table headers *
 ***********************************@
 @header(key:String, title:String) = {
-    <th class="@key.replace(".","_") header">
-        <a href="@routes.Application.list()">@title</a>
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
     </th>
 }
 
@@ -13,6 +39,15 @@
 
 
     <h1 id="homeTitle">@currentPage.getTotalRowCount computers found</h1>
+    
+    <div id="actions">
+        
+        <form action="@link(0, "name")" method="GET">
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by computer name...">
+            <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
+        </form>
+        
+    </div>
 
     @if(currentPage.getTotalRowCount == 0) {
         
@@ -67,7 +102,7 @@
             <ul>
                 @if(currentPage.hasPrev) {
                     <li class="prev">
-                        <a href="@routes.Application.list(currentPage.getPageIndex - 1)">&larr; Previous</a>
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
                     </li>
                 } else {
                     <li class="prev disabled">
@@ -79,7 +114,7 @@
                 </li>
                 @if(currentPage.hasNext) {
                     <li class="next">
-                        <a href="@routes.Application.list(currentPage.getPageIndex + 1)">Next &rarr;</a>
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
                     </li>
                 } else {
                     <li class="next disabled">
