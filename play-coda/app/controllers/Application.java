@@ -13,18 +13,9 @@ public class Application extends Controller {
     }
 
     /**
-     * Display the paginated list of computers.
-     * 
-     * @param page
-     *            Current page number (starts from 0)
-     * @param sortBy
-     *            Column to be sorted
-     * @param order
-     *            Sort order (either asc or desc)
-     * @param filter
-     *            Filter applied on computer names
+     * Display the list of computers.
      */
-    public static Result list(int page, String sortBy, String order, String filter) {
+    public static Result list() {
         return TODO;
     }
 
