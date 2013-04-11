@@ -3,6 +3,7 @@ import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.callAction;
 import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.fakeRequest;
 import static play.test.Helpers.running;
 import static play.test.Helpers.status;
 
@@ -17,7 +18,8 @@ public class FunctionalTest {
         running(fakeApplication(), new Runnable() {
             @Override
             public void run() {
-                Result result = callAction(controllers.routes.ref.Application.create());
+                Result result = callAction(controllers.routes.ref.Application.create(),
+                        fakeRequest().withSession("email", "play@example.com"));
                 assertThat(status(result)).isEqualTo(OK);
                 assertThat(contentAsString(result)).contains("<form");
             }

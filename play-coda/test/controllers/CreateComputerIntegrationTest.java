@@ -48,10 +48,20 @@ public class CreateComputerIntegrationTest extends FluentTest {
         name = "the first one";
         assertThat(Computer.find.where().eq("name", name).findRowCount()).isEqualTo(0);
 
-        // Common arrangement
+        // Common arrangement, login and go to create computer page
+        login();
+
         page = createPage(CreateComputerPage.class);
         page.go();
         page.isAt();
+    }
+
+    private void login() {
+        LoginPage loginPage = createPage(LoginPage.class);
+        loginPage.go();
+        loginPage.fillEmail("play@example.com");
+        loginPage.fillPassword("secret");
+        loginPage.submit();
     }
 
     @AfterClass

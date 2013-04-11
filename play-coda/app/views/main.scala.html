@@ -14,6 +14,15 @@
                     Play2 Demo
                 </a>
             </h1>
+            <dl id="user">
+                <dd>
+                    @if(Secured.getUsername == null) {
+                        <a href="@routes.Application.login()">Login</a>
+                    } else {
+                        @Secured.getUsername (<a href="@routes.Application.logout()">Logout</a>)
+                    }
+                </dd>
+            </dl>
         </header>
         
         <section id="main">

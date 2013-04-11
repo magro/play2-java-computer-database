@@ -1,0 +1,42 @@
+@(loginForm: Form[Application.Login])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Login") {
+        
+    @helper.form(routes.Application.authenticate) {
+        
+        <h1>Sign in</h1>
+        
+        @if(loginForm.hasGlobalErrors) {
+            <div class="alert-message error">
+                @loginForm.globalError.message
+            </div>
+        }
+        
+        @if(flash.contains("success")) {
+            <div class="alert-message success">
+                @flash.get("success")
+            </div>
+        }
+        
+        <fieldset>
+            @inputText(loginForm("email"), '_label -> "Email")
+            @inputPassword(loginForm("password"), '_label -> "Password")
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Login" class="btn primary"> or 
+            <a href="@routes.Application.list()" class="btn">Cancel</a> 
+        </div>
+        
+    }
+    
+    <p class="note">
+        Try <em>play@@example.com</em> with <em>secret</em> as password.
+    </p>
+
+}
+
+

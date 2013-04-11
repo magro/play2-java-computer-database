@@ -38,8 +38,4 @@ public class CreateComputerPage extends ExtFluentPage {
     public void selectCompany(Long companyId) {
         selectOption("company.id", companyId.toString());
     }
-
-    public void submit() {
-        findExisting("input[type='submit']").click();
-    }
 }

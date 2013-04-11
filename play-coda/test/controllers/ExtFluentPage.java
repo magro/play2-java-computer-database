@@ -45,6 +45,10 @@ public class ExtFluentPage extends FluentPage {
         return "*[name='" + name + "']";
     }
 
+    public void submit() {
+        findExisting("input[type='submit']").click();
+    }
+
     public static String urlFor(final play.api.mvc.Call call) {
         return urlFor(call.url());
     }
