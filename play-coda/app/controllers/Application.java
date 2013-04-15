@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.Map;
 
 import models.Computer;
+import play.Routes;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -76,6 +77,13 @@ public class Application extends Controller {
 
     public static Result delete(Long id) {
         return TODO;
+    }
+
+    // -- Javascript routing
+
+    public static Result javascriptRoutes() {
+        return ok(Routes.javascriptRouter("jsRoutes", controllers.routes.javascript.Application.liveSearch())).as(
+                "text/javascript");
     }
 
     // -- Authentication

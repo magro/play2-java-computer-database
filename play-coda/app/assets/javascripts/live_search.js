@@ -13,9 +13,7 @@ window.coda.AjaxInput = (function () {
   
   var liveSearch = function liveSearch(event) {
       var q = $("#searchbox").val();
-      $.ajax({
-        type: "GET",
-        url: "http://localhost:9000/computers/search.json?p=0&f=" + q,
+      jsRoutes.controllers.Application.liveSearch(null, null, null, q).ajax({
         success: function(data, textStatus, jqXHR) {
         	$(document).off('keyup', '#searchbox');
         	window.ajaxUtils.updateHtmlBySelector(data);
