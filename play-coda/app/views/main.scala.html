@@ -7,10 +7,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         
         <script type="text/javascript" src="@routes.Application.javascriptRoutes"></script>
+        @helper.requireJs(core = routes.Assets.at("javascripts/require.js").url, module = routes.Assets.at("javascripts/main").url)
+        @*
         <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/ajax_utils.js")"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/live_search.js")"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/init.js")"></script>
+        *@
         
     </head>
     <body>

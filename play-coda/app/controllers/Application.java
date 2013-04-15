@@ -6,6 +6,7 @@ import java.util.Map;
 
 import models.Computer;
 import play.Routes;
+import play.cache.Cached;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -81,6 +82,7 @@ public class Application extends Controller {
 
     // -- Javascript routing
 
+    @Cached(key = "jsroutes", duration = 3600)
     public static Result javascriptRoutes() {
         return ok(Routes.javascriptRouter("jsRoutes", controllers.routes.javascript.Application.liveSearch())).as(
                 "text/javascript");

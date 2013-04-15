@@ -1,5 +1,3 @@
-/*global Spinner */
-
 window.coda =  window.coda || {};
 
 window.coda.AjaxInput = (function () {
