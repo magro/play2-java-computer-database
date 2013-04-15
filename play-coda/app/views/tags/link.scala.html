@@ -1,0 +1,26 @@
+@(currentSortBy: String, currentOrder: String, currentFilter: String, newPage:Int, newSortBy:String)
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.Application.list(newPage, sortBy, order, currentFilter)
+    
+}

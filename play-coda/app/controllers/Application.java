@@ -1,11 +1,18 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import java.util.Map;
+
 import models.Computer;
 import play.data.Form;
+import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+
+import com.avaje.ebean.Page;
+import com.google.common.collect.ImmutableMap;
 
 public class Application extends Controller {
 
@@ -23,6 +30,21 @@ public class Application extends Controller {
      */
     public static Result list(int page, String sortBy, String order, String filter) {
         return ok(views.html.list.render(Computer.page(page, 10, sortBy, order, filter), sortBy, order, filter));
+    }
+
+    /**
+     * Filters computers and returns the html to update encapsulated in json.
+     * 
+     * @return json with an object named "htmlBySelector" that contains selector -&gt; html mappings
+     */
+    public static Result liveSearch(int page, String sortBy, String order, String filter) {
+        final Page<Computer> items = Computer.page(page, 10, sortBy, order, filter);
+        // @formatter:off
+        final Map<String, String> htmlBySelector = ImmutableMap.of(
+                "#homeTitle.text", Messages.get("list.content.title", items.getTotalRowCount()),
+                "#content", views.html.listComponent.render(items, sortBy, order, filter).body());
+        // @formatter:on
+        return ok(JsonUtil.successMessageWithHtml(htmlBySelector));
     }
 
     @Security.Authenticated(Secured.class)

@@ -1,0 +1,98 @@
+@(currentPage: com.avaje.ebean.Page[Computer], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    tags.link(currentSortBy, currentOrder, currentFilter, newPage, newSortBy)
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(key:String, title:String) = {
+    <th class="@key.replace(".","_") header @if(currentSortBy == key) @{if(currentOrder == "asc") "headerSortDown" else "headerSortUp"}">
+        <a href="@link(0, key)">@title</a>
+    </th>
+}
+
+<div id="content">
+
+    @if(currentPage.getTotalRowCount == 0) {
+        
+        <div class="well">
+            <em>Nothing to display</em>
+        </div>
+        
+    } else {
+        
+        <table class="computers zebra-striped">
+            <thead>
+                <tr>
+                    @header("name", "Computer name")
+                    @header("introduced", "Introduced")
+                    @header("discontinued", "Discontinued")
+                    @header("company.name", "Company")
+                </tr>
+            </thead>
+            <tbody>
+
+                @for(computer <- currentPage.getList()) {
+                    <tr>
+                        <td><a href="@routes.Application.edit(computer.id)">@computer.name</a></td>
+                        <td>
+                            @if(computer.introduced == null) {
+                                <em>-</em>
+                            } else {
+                                @computer.introduced.format("dd MMM yyyy")
+                            }
+                        </td>
+                        <td>
+                            @if(computer.discontinued == null) {
+                                <em>-</em>
+                            } else {
+                                @computer.discontinued.format("dd MMM yyyy")
+                            }
+                        </td>
+                        <td>
+                            @if(computer.company == null) {
+                                <em>-</em>
+                            } else {
+                                @computer.company.name
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+        <div id="pagination" class="pagination">
+            <ul>
+                @if(currentPage.hasPrev) {
+                    <li class="prev">
+                        <a href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
+                    </li>
+                } else {
+                    <li class="prev disabled">
+                        <a>&larr; Previous</a>
+                    </li>
+                }
+                <li class="current">
+                    <a>Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+                </li>
+                @if(currentPage.hasNext) {
+                    <li class="next">
+                        <a href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
+                    </li>
+                } else {
+                    <li class="next disabled">
+                        <a>Next &rarr;</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        
+    }
+
+</div>
