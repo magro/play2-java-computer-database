@@ -7,6 +7,8 @@ GET     /                           controllers.Application.index()
 
 # Computers list
 GET     /computers                  controllers.Application.list(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /computersAsync             controllers.Application.listAsync(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /computersAsync2            controllers.Application.listAsync2(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /computers/search.json      controllers.Application.liveSearch(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Add computer
