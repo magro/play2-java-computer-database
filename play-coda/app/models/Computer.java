@@ -50,6 +50,7 @@ public class Computer extends Model {
                 .ilike("name", "%" + filter + "%")
                 .orderBy(sortBy + " " + order)
                 .findPagingList(pageSize)
+                .setFetchAhead(false)
                 .getPage(page);
     }
 
