@@ -22,6 +22,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import scala.concurrent.ExecutionContext;
+import utils.Predicated;
 import akka.dispatch.ExecutionContexts;
 import akka.dispatch.Futures;
 
@@ -44,6 +45,18 @@ public class Application extends Controller {
     private static final ThreadPoolExecutor tpe = new ThreadPoolExecutor(minConnections, maxConnections, 0L,
             TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory("dbEc"));
     private static final ExecutionContext dbEc = ExecutionContexts.fromExecutorService(tpe);
+
+    // A predicate for checking our ability to service database requests is determined by ensuring that the request
+    // queue doesn't fill up beyond a certain threshold. For convenience we use the max number of connections
+    // to determine this threshold. It is a rough check as we don't know how many queries we're going
+    // to make or what other threads are running in parallel etc. Nevertheless, the check is adequate in order to
+    // throttle the acceptance of requests to the size of the pool.
+    public static class IsDbAvailable implements Callable<Boolean> {
+        @Override
+        public Boolean call() {
+            return (tpe.getQueue().size() < maxConnections);
+        }
+    }
 
     public static Result index() {
         return ok(views.html.index.render("Your new application is ready."));
@@ -70,19 +83,10 @@ public class Application extends Controller {
         }));
     }
 
-    private static Callable<Page<Computer>> listCallable(final int page, final String sortBy, final String order,
-            final String filter) {
-        return new Callable<Page<Computer>>() {
-            @Override
-            public Page<Computer> call() throws Exception {
-                return Computer.page(page, 10, sortBy, order, filter);
-            }
-        };
-    }
-
     /**
      * Display the list of computers.
      */
+    @Predicated(predicate = IsDbAvailable.class, failed = SERVICE_UNAVAILABLE)
     public static Result listAsync2(final int page, final String sortBy, final String order, final String filter) {
         Promise<Page<Computer>> promise = Akka.asPromise(Futures
                 .future(listCallable(page, sortBy, order, filter), dbEc));
@@ -92,6 +96,16 @@ public class Application extends Controller {
                 return ok(views.html.list.render(items, sortBy, order, filter));
             }
         }));
+    }
+
+    private static Callable<Page<Computer>> listCallable(final int page, final String sortBy, final String order,
+            final String filter) {
+        return new Callable<Page<Computer>>() {
+            @Override
+            public Page<Computer> call() throws Exception {
+                return Computer.page(page, 10, sortBy, order, filter);
+            }
+        };
     }
 
     /**
