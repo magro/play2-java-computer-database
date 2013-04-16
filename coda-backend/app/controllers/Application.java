@@ -13,7 +13,6 @@ import play.libs.Akka;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.concurrent.ExecutionContext;
-import views.html.index;
 import akka.dispatch.ExecutionContexts;
 import akka.dispatch.Futures;
 
