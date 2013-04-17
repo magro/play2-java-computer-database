@@ -16,7 +16,7 @@ public class IntegrationTest {
      * add your integration test here in this example we just check if the welcome page is being shown
      */
     @Test
-    public void test() {
+    public void testIndexMessage() {
         running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
             @Override
             public void invoke(TestBrowser browser) {
