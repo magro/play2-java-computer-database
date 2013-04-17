@@ -43,6 +43,10 @@ public class Computer extends Model {
         this.company = company;
     }
 
+    public String getCompanyName() {
+        return company == null ? null : company.name;
+    }
+
     public static Finder<Long, Computer> find = new Finder<Long, Computer>(Long.class, Computer.class);
 
     public static Page<Computer> page(int page, int pageSize, String sortBy, String order, String filter) {
