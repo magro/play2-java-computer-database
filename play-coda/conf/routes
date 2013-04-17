@@ -29,7 +29,8 @@ GET     /logout                     controllers.Application.logout()
 GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes()
 
 # Async Actions
-GET     /computersAsync             controllers.AsyncApplication.listAsync(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /slowList                   controllers.AsyncApplication.slowList(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /asyncSlowList              controllers.AsyncApplication.asyncSlowList(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /blockingWs                 controllers.AsyncApplication.blockingWs()
 GET     /nonBlockingWs              controllers.AsyncApplication.nonBlockingWs()
 
