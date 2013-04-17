@@ -9,6 +9,7 @@ import java.util.Date;
 import models.Company;
 import models.Computer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +27,7 @@ public class ModelTest {
         start(app);
     }
 
+    @After
     public void teardown() {
         stop(app);
     }
