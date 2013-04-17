@@ -50,12 +50,19 @@ public class Computer extends Model {
     public static Finder<Long, Computer> find = new Finder<Long, Computer>(Long.class, Computer.class);
 
     public static Page<Computer> page(int page, int pageSize, String sortBy, String order, String filter) {
+        // @formatter:off
         return find.where()
                 .ilike("name", "%" + filter + "%")
                 .orderBy(sortBy + " " + order)
                 .findPagingList(pageSize)
                 .setFetchAhead(false)
                 .getPage(page);
+        // @formatter:on
+    }
+
+    @Override
+    public String toString() {
+        return "Computer [id=" + id + ", name=" + name + "]";
     }
 
 }
