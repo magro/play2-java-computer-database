@@ -5,11 +5,6 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-# Async Actions
-GET     /computersAsync             controllers.AsyncApplication.listAsync(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
-GET     /blockingWs                 controllers.AsyncApplication.blockingWs()
-GET     /nonBlockingWs              controllers.AsyncApplication.nonBlockingWs()
-
 # Computers list
 GET     /computers                  controllers.Application.list(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /computers/search.json      controllers.Application.liveSearch(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
@@ -32,6 +27,11 @@ GET     /logout                     controllers.Application.logout()
 
 # Javascript routing
 GET     /assets/javascripts/routes  controllers.Application.javascriptRoutes()
+
+# Async Actions
+GET     /computersAsync             controllers.AsyncApplication.listAsync(p: Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /blockingWs                 controllers.AsyncApplication.blockingWs()
+GET     /nonBlockingWs              controllers.AsyncApplication.nonBlockingWs()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
