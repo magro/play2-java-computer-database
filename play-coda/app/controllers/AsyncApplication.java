@@ -127,8 +127,7 @@ public class AsyncApplication extends Controller {
         }
     };
 
-    // =================================== Pure WebService sync/async test
-    // ===================================================
+    // ============================ Pure WebService sync/async test =======================
 
     public static Result blockingWs() {
         return ok(WS.url("http://localhost:9001/orderinfo").setQueryParameter("name", "ACE").get().get().getBody());
