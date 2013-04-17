@@ -1,6 +1,6 @@
 package controllers;
 
-import static controllers.JsonUtil.MAPPER;
+import static utils.JsonUtil.MAPPER;
 
 import java.io.IOException;
 import java.util.List;
