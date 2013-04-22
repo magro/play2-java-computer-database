@@ -3,14 +3,16 @@ Performs DOM replacements according to the given json.
 Expects json like
 <code>
 {
-"htmlBySelector" : {
-"title": '<title>Some title</title>',
-"#someId": '<div id="someId">...</div>'
-}
+  "htmlBySelector" : {
+    "title": '<title>Some title</title>',
+    "#someId": '<div id="someId">...</div>',
+    "#anotherId.text": '<div id="anotherId">text to change</div>'
+  }
 }
 </code>
 The keys of htmlBySelector are jquery selectors. The values
-are the replacement HTML.
+are the replacement HTML. If the key ends with ".text" the
+value will be treated as replacement text.
 ###
 updateHtmlBySelector = (json) ->
   selector = undefined
