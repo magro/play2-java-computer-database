@@ -1,3 +1,7 @@
-require(["jquery-1.9.1", "ajax_utils", "live_search", "init"], function($, ajaxUtils, liveSearch, init) {
-   //do stuff
+require(["domReady", "jquery-1.9.1", "ajax_utils", "live_search"], function(domReady, $, ajaxUtils, liveSearch) {
+	//do stuff
+	domReady(function () {
+		"use strict";
+		coda.AjaxInput.init();
+	});
 });
