@@ -34,5 +34,7 @@ GET     /asyncSlowList              controllers.AsyncApplication.asyncSlowList(p
 GET     /blockingWs                 controllers.AsyncApplication.blockingWs()
 GET     /nonBlockingWs              controllers.AsyncApplication.nonBlockingWs()
 
+GET     /nonBlockingWsScala         controllers.AsyncScalaApplication.nonBlockingWs()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
