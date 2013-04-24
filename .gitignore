@@ -1,4 +1,6 @@
 play-coda/.gitignore
+play-coda/.gitignore.bak
 TODO
 coda-backend/
 ebean-2.7.0/
+stage/
